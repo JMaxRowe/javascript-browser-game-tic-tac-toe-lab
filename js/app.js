@@ -13,21 +13,24 @@ const winningCombos = [
 
 /*---------------------------- Variables (state) ----------------------------*/
 let board = [
-    "X", "O","O",
-    "O", "X", "X", 
-    "O", "X", "O" 
+    "", "","",
+    "", "", "", 
+    "", "", "" 
 
 ];
 let turn = "X";
 let winner = false;
 let tie = false;
-
+let scoreX = 0;
+let scoreO = 0;
 
 /*------------------------ Cached Element References ------------------------*/
 const squareEls = document.querySelectorAll('.sqr');;
 const messageEl = document.getElementById("message");
 const boardEl = document.querySelector('.board');
 const resetBtnEl = document.getElementById("reset");
+const scoreXEl = document.getElementById('scoreX');
+const scoreOEl = document.getElementById('scoreO');
 
 
 
@@ -37,13 +40,25 @@ function render(){
     updateMessage()
 };
 function init(){
-    console.log("init");
+    
+    board = [
+    "", "","",
+    "", "", "", 
+    "", "", "" ]
+    winner = false;
+    tie = false;
+
+    squareEls.forEach((squ) => {
+        squ.classList.remove("winner");
+        squ.classList.remove("draw");
+    })
     render();
 };
 
 function updateBoard(){
     board.forEach((tile, index) => {
        squareEls[index].textContent = tile;
+
     })
 };
 
@@ -60,6 +75,16 @@ function updateMessage(){
     }
 };
 
+function updateScore(){
+    if(!winner) return;
+    else if (turn === "X"){
+        scoreX++
+        scoreXEl.textContent = scoreX
+    }
+    else{scoreO++}
+    scoreOEl.textContent = scoreO
+}
+
 function handleClick(e) {
     const clickedEl = e.target;
     console.log(clickedEl)
@@ -69,6 +94,7 @@ function handleClick(e) {
     placePiece(squareIndex);
     checkForWinner();
     checkForTie();
+    updateScore()
     switchPlayerTurn();
     render();
 
@@ -87,7 +113,13 @@ function checkForWinner(){
 
         if (valA !== "" && valA === valB && valA === valC) {
             winner = true;
+            let winningSquares = combo;
+
+            combo.forEach(index => {
+                squareEls[index].classList.add("winner")
+            })
         }
+
     });
     
 }
@@ -101,8 +133,11 @@ function checkForTie(){
         }
     else{
         tie = true;
+         squareEls.forEach(square => {
+      square.classList.add("draw");
+      });
     }
-    console.log(tie)
+   
 }
 
 function switchPlayerTurn(){
@@ -110,7 +145,6 @@ function switchPlayerTurn(){
     else {
        turn = turn === "X" ? "O" : "X";
     }
-    console.log(turn)
 }
 
 
