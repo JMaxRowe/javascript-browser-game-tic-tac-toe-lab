@@ -27,7 +27,7 @@ let tie = false;
 const squareEls = document.querySelectorAll('.sqr');;
 const messageEl = document.getElementById("message");
 const boardEl = document.querySelector('.board');
-
+const resetBtnEl = document.getElementById("reset");
 
 
 
@@ -64,11 +64,13 @@ function handleClick(e) {
     const clickedEl = e.target;
     console.log(clickedEl)
     const squareIndex = parseInt(clickedEl.id);
-    if(board[squareIndex]=== "X" || board[squareIndex === "O" || winner]){
+    if(board[squareIndex]=== "X" || board[squareIndex] === "O" || winner){
         return}
     placePiece(squareIndex);
     checkForWinner();
     checkForTie();
+    switchPlayerTurn();
+    render();
 
 }
 
@@ -92,7 +94,7 @@ function checkForWinner(){
 
 function checkForTie(){
     if(winner){
-        return
+        return;
     }
     else if(board.includes("")){
         tie = false;
@@ -103,11 +105,20 @@ function checkForTie(){
     console.log(tie)
 }
 
+function switchPlayerTurn(){
+    if(winner === true){return}
+    else {
+       turn = turn === "X" ? "O" : "X";
+    }
+    console.log(turn)
+}
 
-console.log(updateBoard())
+
 /*----------------------------- Event Listeners -----------------------------*/
 squareEls.forEach((square) => {
     square.addEventListener("click", handleClick);
 });
+
+resetBtnEl.addEventListener("click", init);
 
 init()

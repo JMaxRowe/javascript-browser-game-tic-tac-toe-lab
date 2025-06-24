@@ -18,3 +18,12 @@ body {
   font-size: 64px;
   text-align: center;
 }
+
+body {
+  display: flex;
+  justify-content: center;  
+  align-items: center;                 
+  margin: 0;                 
+  flex-direction: column;    
+  gap: 10px
+}
