@@ -14,8 +14,8 @@ const winningCombos = [
 /*---------------------------- Variables (state) ----------------------------*/
 let board = [
     "X", "O","O",
-    "X", "X", "X", 
-    "X", "X", "X" 
+    "O", "X", "X", 
+    "O", "X", "O" 
 
 ];
 let turn = "X";
@@ -35,7 +35,6 @@ const boardEl = document.querySelector('.board');
 function render(){
     updateBoard()
     updateMessage()
-    placePiece()
 };
 function init(){
     console.log("init");
@@ -69,6 +68,7 @@ function handleClick(e) {
         return}
     placePiece(squareIndex);
     checkForWinner();
+    checkForTie();
 
 }
 
@@ -88,6 +88,19 @@ function checkForWinner(){
         }
     });
     
+}
+
+function checkForTie(){
+    if(winner){
+        return
+    }
+    else if(board.includes("")){
+        tie = false;
+        }
+    else{
+        tie = true;
+    }
+    console.log(tie)
 }
 
 
