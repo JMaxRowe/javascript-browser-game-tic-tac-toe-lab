@@ -67,7 +67,8 @@ function handleClick(e) {
     const squareIndex = parseInt(clickedEl.id);
     if(board[squareIndex]=== "X" || board[squareIndex === "O" || winner]){
         return}
-    placePiece(squareIndex)
+    placePiece(squareIndex);
+    checkForWinner();
 
 }
 
@@ -77,6 +78,15 @@ console.log(board)
 }
 
 function checkForWinner(){
+    winningCombos.forEach((combo) => {
+        const valA = board[combo[0]];
+        const valB = board[combo[1]];
+        const valC = board[combo[2]];
+
+        if (valA !== "" && valA === valB && valA === valC) {
+            winner = true;
+        }
+    });
     
 }
 
